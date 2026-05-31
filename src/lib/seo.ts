@@ -2,27 +2,35 @@
 
 import type { ToolMeta } from './types';
 import type { Metadata } from 'next';
+import { localeCodes } from '@/i18n';
 
 const SITE_NAME = 'ImageTools';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
 const TAGLINE = 'Free online image tools — 100% browser-side, zero upload, no signup.';
 
 /** 为工具页面生成 Metadata */
-export function generateToolMeta(tool: ToolMeta): Metadata {
+export function generateToolMeta(tool: ToolMeta, locale: string = 'en'): Metadata {
   const title = `${tool.title} — Free Online, No Upload | ${SITE_NAME}`;
   const description = tool.description;
   const ogImage = `${SITE_URL}/og/${tool.slug}.png`;
+  const url = `${SITE_URL}/${locale}/tools/${tool.slug}`;
 
   return {
     title,
     description,
     keywords: tool.keywords,
-    alternates: { canonical: `${SITE_URL}/tools/${tool.slug}` },
+    alternates: {
+      canonical: url,
+      languages: {
+        'x-default': `${SITE_URL}/en/tools/${tool.slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/tools/${tool.slug}`])),
+      },
+    },
     openGraph: {
       title,
       description,
       siteName: SITE_NAME,
-      url: `${SITE_URL}/tools/${tool.slug}`,
+      url,
       type: 'website',
       images: [{ url: ogImage, width: 1200, height: 630 }],
     },
@@ -36,17 +44,23 @@ export function generateToolMeta(tool: ToolMeta): Metadata {
 }
 
 /** 为首页生成 Metadata */
-export function generateHomeMeta(): Metadata {
+export function generateHomeMeta(locale: string = 'en'): Metadata {
   return {
     title: `${SITE_NAME} — Free Online Image Tools, No Upload Required`,
     description: TAGLINE,
     keywords: ['image tools', 'compress image', 'convert image', 'resize image', 'crop image', 'free online image editor'],
-    alternates: { canonical: SITE_URL },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        'x-default': `${SITE_URL}/en/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/`])),
+      },
+    },
     openGraph: {
       title: `${SITE_NAME} — Free Online Image Tools`,
       description: TAGLINE,
       siteName: SITE_NAME,
-      url: SITE_URL,
+      url: `${SITE_URL}/${locale}`,
       type: 'website',
       images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
     },
@@ -60,20 +74,28 @@ export function generateHomeMeta(): Metadata {
 }
 
 /** 为格式转换页面生成 Metadata */
-export function generateConvertMeta(fromLabel: string, toLabel: string): Metadata {
+export function generateConvertMeta(fromLabel: string, toLabel: string, locale: string = 'en'): Metadata {
   const title = `${fromLabel} to ${toLabel} Converter — Free Online, No Upload | ${SITE_NAME}`;
   const description = `Convert ${fromLabel} to ${toLabel} online for free. 100% browser-based — your files never leave your device. No signup, no upload, instant download.`;
+  const slug = `${fromLabel.toLowerCase()}-to-${toLabel.toLowerCase()}`;
+  const url = `${SITE_URL}/${locale}/convert/${slug}`;
 
   return {
     title,
     description,
     keywords: [`${fromLabel.toLowerCase()} to ${toLabel.toLowerCase()}`, `convert ${fromLabel.toLowerCase()} to ${toLabel.toLowerCase()}`, `${fromLabel.toLowerCase()} to ${toLabel.toLowerCase()} converter`, `${fromLabel.toLowerCase()} to ${toLabel.toLowerCase()} online`],
-    alternates: { canonical: `${SITE_URL}/convert/${fromLabel.toLowerCase()}-to-${toLabel.toLowerCase()}` },
+    alternates: {
+      canonical: url,
+      languages: {
+        'x-default': `${SITE_URL}/en/convert/${slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/convert/${slug}`])),
+      },
+    },
     openGraph: {
       title,
       description,
       siteName: SITE_NAME,
-      url: `${SITE_URL}/convert/${fromLabel.toLowerCase()}-to-${toLabel.toLowerCase()}`,
+      url,
       type: 'website',
       images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
     },
@@ -87,12 +109,12 @@ export function generateConvertMeta(fromLabel: string, toLabel: string): Metadat
 }
 
 /** 生成 WebApplication Schema JSON-LD */
-export function generateWebAppSchema(tool: ToolMeta): object {
+export function generateWebAppSchema(tool: ToolMeta, locale: string = 'en'): object {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: tool.title,
-    url: `${SITE_URL}/tools/${tool.slug}`,
+    url: `${SITE_URL}/${locale}/tools/${tool.slug}`,
     description: tool.description,
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'Any',

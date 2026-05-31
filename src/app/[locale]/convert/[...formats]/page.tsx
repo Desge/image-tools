@@ -37,6 +37,20 @@ export async function generateMetadata({
         ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/convert/${slug}`])),
       },
     },
+    openGraph: {
+      title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
+      description: t.common.seoDescription,
+      siteName: 'ImageTools',
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/convert/${slug}`,
+      type: 'website',
+      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
+      description: t.common.seoDescription,
+      images: [`${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`],
+    },
   };
 }
 

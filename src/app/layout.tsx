@@ -1,8 +1,5 @@
-import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'ImageTools — Free Online Image Tools',
@@ -11,12 +8,7 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.ico' },
 };
 
+/// Root layout — minimal shell. [locale]/layout.tsx sets <html lang> dynamically.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
-        {children}
-      </body>
-    </html>
-  );
+  return children;
 }

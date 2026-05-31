@@ -45,9 +45,18 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title,
+      title: `${title} — ${t.common.seoTitleSuffix}`,
       description: desc,
       siteName: 'ImageTools',
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/tools/${tool.slug}`,
+      type: 'website',
+      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} — ${t.common.seoTitleSuffix}`,
+      description: desc,
+      images: [`${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`],
     },
   };
 }
