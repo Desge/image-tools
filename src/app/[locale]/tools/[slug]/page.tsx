@@ -38,10 +38,10 @@ export async function generateMetadata({
     title: `${title} — ${t.common.seoTitleSuffix}`,
     description: t.common.seoDescription,
     alternates: {
-      canonical: `/${locale}/tools/${tool.slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/tools/${tool.slug}`,
       languages: {
-        'x-default': `/en/tools/${tool.slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}/tools/${tool.slug}`])),
+        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/tools/${tool.slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/tools/${tool.slug}`])),
       },
     },
     openGraph: {

@@ -31,10 +31,10 @@ export async function generateMetadata({
     title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
     description: t.common.seoDescription,
     alternates: {
-      canonical: `/${locale}/convert/${slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/convert/${slug}`,
       languages: {
-        'x-default': `/en/convert/${slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}/convert/${slug}`])),
+        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/convert/${slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/convert/${slug}`])),
       },
     },
   };

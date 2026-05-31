@@ -48,6 +48,13 @@ export function generateHomeMeta(): Metadata {
       siteName: SITE_NAME,
       url: SITE_URL,
       type: 'website',
+      images: [{ url: `${SITE_URL}/og-image.svg`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${SITE_NAME} — Free Online Image Tools`,
+      description: TAGLINE,
+      images: [`${SITE_URL}/og-image.svg`],
     },
   };
 }
@@ -68,6 +75,13 @@ export function generateConvertMeta(fromLabel: string, toLabel: string): Metadat
       siteName: SITE_NAME,
       url: `${SITE_URL}/convert/${fromLabel.toLowerCase()}-to-${toLabel.toLowerCase()}`,
       type: 'website',
+      images: [{ url: `${SITE_URL}/og-image.svg`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${SITE_URL}/og-image.svg`],
     },
   };
 }

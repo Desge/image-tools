@@ -18,11 +18,12 @@ export async function generateMetadata({
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}`,
       languages: {
-        'x-default': '/en',
-        ...Object.fromEntries(LOCALES.map((l) => [l.code, `/${l.code}`])),
+        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/`,
+        ...Object.fromEntries(LOCALES.map((l) => [l.code, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l.code}/`])),
       },
     },
     openGraph: { locale, siteName: t.common.siteName },
+    twitter: { card: 'summary_large_image' },
   };
 }
 

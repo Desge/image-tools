@@ -20,10 +20,10 @@ export async function generateMetadata({
     title: `${t.common.siteName} — ${t.home.subtitle.replace(/\n/g, ' ')}`,
     description: t.common.tagline,
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}`,
       languages: {
-        'x-default': '/en',
-        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}`])),
+        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/`])),
       },
     },
   };
