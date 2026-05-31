@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   Light / Dark 主题 — CSS 变量驱动
+   切换主题只需修改 html[data-theme]
+   不使用 Tailwind dark: 前缀（它只响应 prefers-color-scheme）
+   ═══════════════════════════════════════════ */
+
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-card: #ffffff;
+  --bg-hover: #f9fafb;
+  --bg-input: #ffffff;
+  --bg-badge-green: #dcfce7;
+  --bg-badge-blue: #dbeafe;
+  --bg-badge-purple: #f3e8ff;
+  --bg-badge-orange: #fff7ed;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --text-link: #2563eb;
+  --text-badge-green: #166534;
+  --text-badge-blue: #1e40af;
+  --text-badge-purple: #6b21a8;
+  --text-badge-orange: #9a3412;
+
+  --border-primary: #e5e7eb;
+  --border-secondary: #f3f4f6;
+  --border-focus: #3b82f6;
+  --border-dashed: #d1d5db;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-light: #eff6ff;
+  --accent-text: #1d4ed8;
+  --accent-bg-light: #dbeafe;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+
+  --danger-bg: #fef2f2;
+  --danger-text: #991b1b;
+  --success-bg: #f0fdf4;
+  --success-text: #166534;
+  --info-bg: #eff6ff;
+  --info-text: #1e40af;
+  --warning-bg: #fffbeb;
+  --warning-text: #92400e;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-tertiary: #1a1a24;
+  --bg-card: #16161f;
+  --bg-hover: #1e1e2a;
+  --bg-input: #1a1a24;
+  --bg-badge-green: #064e3b;
+  --bg-badge-blue: #1e3a5f;
+  --bg-badge-purple: #3b1f6e;
+  --bg-badge-orange: #4a1d0e;
+
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --text-link: #60a5fa;
+  --text-badge-green: #6ee7b7;
+  --text-badge-blue: #93c5fd;
+  --text-badge-purple: #c4b5fd;
+  --text-badge-orange: #fdba74;
+
+  --border-primary: #27272a;
+  --border-secondary: #1f1f28;
+  --border-focus: #3b82f6;
+  --border-dashed: #3f3f46;
+
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-light: #1e3a5f;
+  --accent-text: #93c5fd;
+  --accent-bg-light: #1e293b;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+  --danger-bg: #450a0a;
+  --danger-text: #fca5a5;
+  --success-bg: #052e16;
+  --success-text: #86efac;
+  --info-bg: #1e3a5f;
+  --info-text: #93c5fd;
+  --warning-bg: #451a03;
+  --warning-text: #fdba74;
+}
+
+/* ═══════════════════════════════════════════
+   Global base styles
+   ═══════════════════════════════════════════ */
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════
+   Form elements — CSS variable driven
+   ═══════════════════════════════════════════ */
+
+/* Select */
+select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-size: 1.25rem;
+  background-repeat: no-repeat;
+  padding-right: 2.25rem;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+/* Select — reset background-color override from Tailwind */
+.dark\:bg-gray-800,
+[class*="dark:bg-"] {
+  background-color: var(--bg-input) !important;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="number"],
+input:not([type]) {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+/* Range slider */
+input[type="range"] {
+  height: 0.5rem;
+  border-radius: 9999px;
+  appearance: none;
+  background-color: var(--border-primary);
+  cursor: pointer;
+  border: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+/* Number inputs — hide spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ═══════════════════════════════════════════
+   Utility classes for component styling
+   ═══════════════════════════════════════════ */
+
+/* Override hardcoded Tailwind colors with CSS vars */
+.bg-gray-50,
+.dark\:bg-gray-800\/50,
+[class*="dark:bg-gray-800"] {
+  background-color: var(--bg-secondary) !important;
+}
+
+.text-gray-600,
+.dark\:text-gray-400,
+[class*="dark:text-gray-400"] {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-500,
+.dark\:text-gray-400,
+[class*="dark:text-gray-500"] {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-700,
+.dark\:text-gray-300,
+[class*="dark:text-gray-300"] {
+  color: var(--text-primary) !important;
+}
+
+.text-gray-800,
+.dark\:text-gray-200,
+[class*="dark:text-gray-200"] {
+  color: var(--text-primary) !important;
+}
+
+.border-gray-200,
+.dark\:border-gray-700,
+.dark\:border-gray-600,
+[class*="dark:border-gray-"] {
+  border-color: var(--border-primary) !important;
+}
+
+.border-gray-300,
+.dark\:border-gray-600 {
+  border-color: var(--border-dashed) !important;
+}
+
+.bg-gray-100,
+.dark\:bg-gray-800,
+[class*="dark:bg-gray-800\b"] {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.bg-gray-200,
+.dark\:bg-gray-700 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Blue link override */
+.text-blue-600,
+.hover\:text-blue-600:hover,
+[class*="text-blue-600"] {
+  color: var(--text-link) !important;
+}
+
+.hover\:text-blue-700:hover {
+  color: var(--accent-hover) !important;
+}
+
+/* Hover backgrounds */
+.hover\:bg-gray-50:hover,
+.dark\:hover\:bg-gray-800:hover,
+.dark\:hover\:bg-gray-800\/50:hover,
+[class*="dark:hover:bg-gray-800"]:hover {
+  background-color: var(--bg-hover) !important;
+}
+
+/* Blue accent backgrounds */
+.bg-blue-50,
+.dark\:bg-blue-900\/20,
+[class*="dark:bg-blue-900"] {
+  background-color: var(--accent-bg-light) !important;
+}
+
+.border-blue-200,
+.dark\:border-blue-800,
+[class*="dark:border-blue-800"] {
+  border-color: var(--accent) !important;
+}
+
+.text-blue-700,
+.dark\:text-blue-300,
+[class*="dark:text-blue-300"] {
+  color: var(--accent-text) !important;
+}
+
+/* Green */
+.bg-green-100,
+.dark\:bg-green-900\/30,
+[class*="dark:bg-green-900"] {
+  background-color: var(--bg-badge-green) !important;
+}
+
+.text-green-700,
+.dark\:text-green-300,
+.text-green-600,
+.dark\:text-green-400,
+[class*="dark:text-green-"] {
+  color: var(--text-badge-green) !important;
+}
+
+/* Purple */
+.bg-purple-100,
+.dark\:bg-purple-900\/30,
+[class*="dark:bg-purple-900"] {
+  background-color: var(--bg-badge-purple) !important;
+}
+
+.text-purple-700,
+.dark\:text-purple-300,
+[class*="dark:text-purple-300"] {
+  color: var(--text-badge-purple) !important;
+}
+
+/* Orange */
+.bg-orange-100,
+.dark\:bg-orange-900\/30,
+[class*="dark:bg-orange-900"] {
+  background-color: var(--bg-badge-orange) !important;
+}
+
+.text-orange-700,
+.dark\:text-orange-300,
+[class*="dark:text-orange-300"] {
+  color: var(--text-badge-orange) !important;
+}
+
+.text-orange-700 {
+  color: var(--text-badge-orange) !important;
+}
+
+/* Ring / outline */
+.ring-2 {
+  --tw-ring-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════
+   RTL support
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+[dir="rtl"] select {
+  background-position: left 0.5rem center;
+  padding-right: 0.75rem;
+  padding-left: 2.25rem;
+}
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}

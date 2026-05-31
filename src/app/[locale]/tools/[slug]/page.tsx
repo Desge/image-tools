@@ -1,0 +1,109 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { TOOLS } from '@/lib/tools';
+import { localeCodes, loadTranslations } from '@/i18n';
+import type { Translations } from '@/i18n';
+import { generateWebApplicationSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/jsonld';
+import { ToolPageClient } from './ToolPageClient';
+
+// ═══════════════════════════════════════════
+// 为每种语言 × 每个工具生成独立页面
+// ═══════════════════════════════════════════
+
+export function generateStaticParams() {
+  const params: { locale: string; slug: string }[] = [];
+  for (const locale of localeCodes()) {
+    for (const tool of TOOLS) {
+      params.push({ locale, slug: tool.slug });
+    }
+  }
+  return params;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const tool = TOOLS.find((t) => t.slug === slug);
+  if (!tool) return {};
+
+  const t = await loadTranslations(locale);
+  const tt = getToolT(t, slug);
+  const title = tt?.title || tool.title;
+  const desc = tt?.description || tool.description;
+
+  return {
+    title: `${title} — ${t.common.seoTitleSuffix}`,
+    description: t.common.seoDescription,
+    alternates: {
+      canonical: `/${locale}/tools/${tool.slug}`,
+      languages: Object.fromEntries(localeCodes().map((l) => [l, `/${l}/tools/${tool.slug}`])),
+    },
+    openGraph: {
+      title,
+      description: desc,
+      siteName: 'ImageTools',
+    },
+  };
+}
+
+function getToolT(t: Translations, slug: string) {
+  const map: Record<string, { title?: string; description?: string; longDescription?: string }> = {
+    compress:              t.tools.compress,
+    resize:                t.tools.resize,
+    crop:                  t.tools.crop,
+    rotate:                t.tools.rotate,
+    watermark:             t.tools.watermark,
+    'color-palette':       t.tools.colorPalette,
+    'favicon-generator':   t.tools.faviconGenerator,
+    'screenshot-beautify': t.tools.screenshotBeautify,
+    base64:                t.tools.base64,
+    'instagram-grid':      t.tools.instagramGrid,
+    'remove-exif':         t.tools.removeExif,
+  };
+  return map[slug] || null;
+}
+
+export default async function LocaleToolPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  const tool = TOOLS.find((t) => t.slug === slug);
+  if (!tool) notFound();
+
+  // 服务端预加载翻译
+  const t = await loadTranslations(locale);
+  const tt = getToolT(t, slug);
+  const relatedTools = TOOLS.filter((rt) => rt.category === tool.category && rt.slug !== tool.slug).slice(0, 4);
+
+  // JSON-LD schemas
+  const webAppSchema = generateWebApplicationSchema(
+    tt?.title || tool.title,
+    tt?.description || tool.description,
+    `/${locale}/tools/${tool.slug}`,
+    'MultimediaApplication'
+  );
+  const faqSchema = generateFAQSchema([
+    { question: t.faq.free.q, answer: t.faq.free.a },
+    { question: t.faq.upload.q, answer: t.faq.upload.a },
+    { question: t.faq.formats.q, answer: t.faq.formats.a },
+    { question: t.faq.batch.q, answer: t.faq.batch.a },
+  ]);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'ImageTools', url: `/${locale}` },
+    { name: tt?.title || tool.title, url: `/${locale}/tools/${tool.slug}` },
+  ]);
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <ToolPageClient t={t} locale={locale} tool={tool} relatedTools={relatedTools} />
+    </>
+  );
+}
