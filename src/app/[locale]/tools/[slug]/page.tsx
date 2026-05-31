@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { TOOLS } from '@/lib/tools';
 import { localeCodes, loadTranslations } from '@/i18n';
 import type { Translations } from '@/i18n';
-import { generateWebApplicationSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/jsonld';
+import { generateWebApplicationSchema, generateFAQSchema, generateBreadcrumbSchema, generateHowToSchema } from '@/lib/jsonld';
 import { ToolPageClient } from './ToolPageClient';
 
 // ═══════════════════════════════════════════
@@ -100,12 +100,17 @@ export default async function LocaleToolPage({
     { name: 'ImageTools', url: `/${locale}` },
     { name: tt?.title || tool.title, url: `/${locale}/tools/${tool.slug}` },
   ]);
+  const howToSchema = generateHowToSchema(
+    `How to ${(tt?.title || tool.title).toLowerCase()}`,
+    ['Upload Image', 'Adjust Settings', 'Download Result'],
+  );
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <ToolPageClient t={t} locale={locale} tool={tool} relatedTools={relatedTools} />
     </>
   );
