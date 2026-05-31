@@ -53,14 +53,7 @@ export function generateWebSiteSchema(
     url: SITE_URL,
     description: TAGLINE,
     inLanguage: locale,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
+    // Note: SearchAction deliberately omitted — no search page exists.
   };
 }
 
