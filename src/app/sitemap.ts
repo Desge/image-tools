@@ -22,7 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1,
       alternates: {
-        languages: Object.fromEntries(localeCodes().map((l) => [l, `${BASE_URL}/${l}`])),
+        languages: {
+          'x-default': `${BASE_URL}/en`,
+          ...Object.fromEntries(localeCodes().map((l) => [l, `${BASE_URL}/${l}`])),
+        },
       },
     });
 

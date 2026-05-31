@@ -21,7 +21,10 @@ export async function generateMetadata({
     description: t.common.tagline,
     alternates: {
       canonical: `/${locale}`,
-      languages: Object.fromEntries(localeCodes().map((l) => [l, `/${l}`])),
+      languages: {
+        'x-default': '/en',
+        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}`])),
+      },
     },
   };
 }

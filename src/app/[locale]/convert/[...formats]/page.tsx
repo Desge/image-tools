@@ -32,7 +32,10 @@ export async function generateMetadata({
     description: t.common.seoDescription,
     alternates: {
       canonical: `/${locale}/convert/${slug}`,
-      languages: Object.fromEntries(localeCodes().map((l) => [l, `/${l}/convert/${slug}`])),
+      languages: {
+        'x-default': `/en/convert/${slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}/convert/${slug}`])),
+      },
     },
   };
 }

@@ -39,7 +39,10 @@ export async function generateMetadata({
     description: t.common.seoDescription,
     alternates: {
       canonical: `/${locale}/tools/${tool.slug}`,
-      languages: Object.fromEntries(localeCodes().map((l) => [l, `/${l}/tools/${tool.slug}`])),
+      languages: {
+        'x-default': `/en/tools/${tool.slug}`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `/${l}/tools/${tool.slug}`])),
+      },
     },
     openGraph: {
       title,

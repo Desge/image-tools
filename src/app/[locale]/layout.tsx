@@ -17,7 +17,10 @@ export async function generateMetadata({
     description: t.common.seoDescription,
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}`,
-      languages: Object.fromEntries(LOCALES.map((l) => [l.code, `/${l.code}`])),
+      languages: {
+        'x-default': '/en',
+        ...Object.fromEntries(LOCALES.map((l) => [l.code, `/${l.code}`])),
+      },
     },
     openGraph: { locale, siteName: t.common.siteName },
   };
