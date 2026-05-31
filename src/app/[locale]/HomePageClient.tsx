@@ -96,7 +96,7 @@ export function HomePageClient({ t, locale, grouped, popularConversions }: HomeP
                       ))}
                       {tool.batchSupport && (
                         <span className="px-2 py-0.5 text-xs rounded-md"
-                          style={{ backgroundColor: 'var(--bg-badge-orange)', color: 'var(--text-badge-orange)' }}>batch</span>
+                          style={{ backgroundColor: 'var(--bg-badge-orange)', color: 'var(--text-badge-orange)' }}>{t.common.batchBadge}</span>
                       )}
                     </div>
                   </Link>

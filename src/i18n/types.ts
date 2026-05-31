@@ -252,8 +252,20 @@ export interface Translations {
     description: string;
     convertBtn: string;
     aboutTitle: string;
+    aboutFormat: string;
+    pageTitleFormat: string;
     relatedConversions: string;
     allFormats: string;
+    format: {
+      png: string;
+      jpg: string;
+      webp: string;
+      avif: string;
+      bmp: string;
+      gif: string;
+      svg: string;
+      ico: string;
+    };
   };
 
   // FAQ

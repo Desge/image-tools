@@ -5,6 +5,9 @@ import { localeCodes, loadTranslations } from '@/i18n';
 import { generateSoftwareApplicationSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/jsonld';
 import { ConverterPageClient } from './ConverterPageClient';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 export function generateStaticParams() {
   const params: { locale: string; formats: string[] }[] = [];
   for (const locale of localeCodes()) {
@@ -31,25 +34,25 @@ export async function generateMetadata({
     title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
     description: t.common.seoDescription,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/convert/${slug}`,
+      canonical: `${SITE_URL}/${locale}/convert/${slug}/`,
       languages: {
-        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/convert/${slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/convert/${slug}`])),
+        'x-default': `${SITE_URL}/en/convert/${slug}/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/convert/${slug}/`])),
       },
     },
     openGraph: {
       title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
       description: t.common.seoDescription,
       siteName: 'ImageTools',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/convert/${slug}`,
+      url: `${SITE_URL}/${locale}/convert/${slug}/`,
       type: 'website',
-      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`, width: 1200, height: 630 }],
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${pair.from.name} ${t.converter.title} ${pair.to.name} — ${t.common.seoTitleSuffix}`,
       description: t.common.seoDescription,
-      images: [`${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`],
+      images: [OG_IMAGE],
     },
   };
 }
@@ -68,8 +71,8 @@ export default async function LocaleConverterPage({
 
   // JSON-LD schemas
   const softwareSchema = generateSoftwareApplicationSchema(
-    `${pair.from.name} to ${pair.to.name} Converter`,
-    `Convert ${pair.from.name} images to ${pair.to.name} format online for free. 100% browser-based.`,
+    `${pair.from.name} ${t.converter.title} ${pair.to.name} ${t.converter.convertBtn.replace(t.converter.title, '').trim()}`,
+    `${t.converter.description}`,
     `/${locale}/convert/${slug}`,
     locale
   );
@@ -80,8 +83,8 @@ export default async function LocaleConverterPage({
   ]);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'ImageTools', url: `/${locale}` },
-    { name: 'Format Converter', url: `/${locale}/convert` },
-    { name: `${pair.from.name} to ${pair.to.name}`, url: `/${locale}/convert/${slug}` },
+    { name: `${pair.from.name} ${t.converter.title} ${pair.to.name}`, url: `/${locale}/convert` },
+    { name: `${pair.from.name} ${t.converter.title} ${pair.to.name}`, url: `/${locale}/convert/${slug}` },
   ]);
 
   return (

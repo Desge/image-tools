@@ -239,8 +239,20 @@ const ja: Translations = {
     description: '画像をオンラインで無料変換。100% ブラウザベース — ファイルが端末から送信されることはありません。登録不要、アップロード不要、即時ダウンロード。',
     convertBtn: 'に変換',
     aboutTitle: 'について',
+    aboutFormat: '{from}と{to}について',
+    pageTitleFormat: '{from}から{to}への変換ツール',
     relatedConversions: '関連変換',
     allFormats: '対応フォーマット一覧',
+    format: {
+      png: 'Portable Network Graphics — ロスレス圧縮、透明度対応',
+      jpg: 'JPEG — 非可逆圧縮、写真に最適',
+      webp: 'Google WebP — 最新フォーマット、可逆+非可逆、JPEGより30%小さい',
+      avif: 'AV1画像フォーマット — 次世代、同じ品質でJPEGより50%小さい',
+      bmp: 'ビットマップ — 非圧縮ラスターフォーマット',
+      gif: 'Graphics Interchange Format — アニメーション対応',
+      svg: 'Scalable Vector Graphics — XMLベース、無限に拡大可能',
+      ico: 'アイコンフォーマット — favicon用、複数サイズ対応',
+    },
   },
   faq: {
     free: {

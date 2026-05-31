@@ -239,8 +239,20 @@ const en: Translations = {
     description: 'Convert images online for free. 100% browser-based — your files never leave your device. No signup, no upload, instant download.',
     convertBtn: 'Convert to',
     aboutTitle: 'About',
+    aboutFormat: 'About {from} and {to}',
+    pageTitleFormat: '{from} to {to} Converter',
     relatedConversions: 'Related Conversions',
     allFormats: 'All Supported Formats',
+    format: {
+      png: 'Portable Network Graphics — lossless compression, supports transparency',
+      jpg: 'JPEG — lossy compression, best for photos',
+      webp: 'Google WebP — modern format, lossy + lossless, 30% smaller than JPEG',
+      avif: 'AV1 Image Format — next-gen, 50% smaller than JPEG at same quality',
+      bmp: 'Bitmap — uncompressed raster format',
+      gif: 'Graphics Interchange Format — supports animation',
+      svg: 'Scalable Vector Graphics — XML-based, infinitely scalable',
+      ico: 'Icon format — used for favicons, supports multiple sizes',
+    },
   },
   faq: {
     free: {

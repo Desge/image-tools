@@ -239,8 +239,20 @@ const ko: Translations = {
     description: '온라인에서 무료로 이미지를 변환하세요. 100% 브라우저 기반 — 파일이 기기를 떠나지 않습니다. 회원가입 불필요, 업로드 불필요, 즉시 다운로드.',
     convertBtn: '(으)로 변환',
     aboutTitle: '정보',
+    aboutFormat: '{from} 및 {to} 정보',
+    pageTitleFormat: '{from}에서 {to}(으)로 변환기',
     relatedConversions: '관련 변환',
     allFormats: '지원되는 모든 형식',
+    format: {
+      png: 'Portable Network Graphics — 무손실 압축, 투명도 지원',
+      jpg: 'JPEG — 손실 압축, 사진에 최적',
+      webp: 'Google WebP — 최신 형식, 손실+무손실, JPEG보다 30% 작음',
+      avif: 'AV1 이미지 형식 — 차세대, 동일 품질에서 JPEG보다 50% 작음',
+      bmp: '비트맵 — 무압축 래스터 형식',
+      gif: 'Graphics Interchange Format — 애니메이션 지원',
+      svg: 'Scalable Vector Graphics — XML 기반, 무한 확장 가능',
+      ico: '아이콘 형식 — 파비콘용, 여러 크기 지원',
+    },
   },
   faq: {
     free: {

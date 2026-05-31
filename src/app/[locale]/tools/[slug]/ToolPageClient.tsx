@@ -43,6 +43,17 @@ function getToolTranslations(t: Translations, slug: string) {
   return map[slug] || { title: '', description: '', longDescription: '' };
 }
 
+function getCategoryLabel(t: Translations, key: string): string {
+  const map: Record<string, string> = {
+    edit: t.home.categoryEdit,
+    convert: t.home.categoryConvert,
+    compress: t.home.categoryCompress,
+    generate: t.home.categoryGenerate,
+    utility: t.home.categoryUtility,
+  };
+  return map[key] || key;
+}
+
 export function ToolPageClient({ locale, t, tool, relatedTools }: { locale: string; t: Translations; tool: ToolMeta; relatedTools: ToolMeta[] }) {
   const ToolComponent = getToolComponent(tool.slug);
   const category = CATEGORIES.find((c) => c.key === tool.category);
@@ -55,7 +66,7 @@ export function ToolPageClient({ locale, t, tool, relatedTools }: { locale: stri
         <Link href={`/${locale}`} className="hover:underline" style={{ color: 'var(--text-link)' }}>{t.nav.home}</Link>
         <span className="mx-2">/</span>
         <Link href={`/${locale}`} className="hover:underline" style={{ color: 'var(--text-link)' }}>
-          {category?.emoji} {category?.label} Tools
+          {getCategoryLabel(t, category?.key || '')}
         </Link>
         <span className="mx-2">/</span>
         <span style={{ color: 'var(--text-primary)' }}>{tt.title || tool.title}</span>

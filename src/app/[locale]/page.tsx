@@ -9,6 +9,8 @@ export function generateStaticParams() {
   return localeCodes().map((locale) => ({ locale }));
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
+
 export async function generateMetadata({
   params,
 }: {
@@ -20,11 +22,25 @@ export async function generateMetadata({
     title: `${t.common.siteName} — ${t.home.subtitle.replace(/\n/g, ' ')}`,
     description: t.common.tagline,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}`,
+      canonical: `${SITE_URL}/${locale}/`,
       languages: {
-        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/`])),
+        'x-default': `${SITE_URL}/en/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/`])),
       },
+    },
+    openGraph: {
+      title: `${t.common.siteName} — ${t.home.title}`,
+      description: t.common.tagline,
+      siteName: t.common.siteName,
+      url: `${SITE_URL}/${locale}/`,
+      type: 'website',
+      images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${t.common.siteName} — ${t.home.title}`,
+      description: t.common.tagline,
+      images: [`${SITE_URL}/og-image.png`],
     },
   };
 }

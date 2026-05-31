@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import { LocaleHeader } from '@/components/ui/LocaleHeader';
 import { LocaleInit } from '@/components/ui/LocaleInit';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
+
 export async function generateMetadata({
   params,
 }: {
@@ -16,14 +18,27 @@ export async function generateMetadata({
     title: t.common.seoTitleSuffix,
     description: t.common.seoDescription,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}`,
+      canonical: `${SITE_URL}/${locale}/`,
       languages: {
-        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/`,
-        ...Object.fromEntries(LOCALES.map((l) => [l.code, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l.code}/`])),
+        'x-default': `${SITE_URL}/en/`,
+        ...Object.fromEntries(LOCALES.map((l) => [l.code, `${SITE_URL}/${l.code}/`])),
       },
     },
-    openGraph: { locale, siteName: t.common.siteName },
-    twitter: { card: 'summary_large_image' },
+    openGraph: {
+      locale,
+      siteName: t.common.siteName,
+      title: t.common.siteName,
+      description: t.common.seoDescription,
+      url: `${SITE_URL}/${locale}/`,
+      type: 'website',
+      images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.common.siteName,
+      description: t.common.seoDescription,
+      images: [`${SITE_URL}/og-image.png`],
+    },
   };
 }
 

@@ -239,8 +239,20 @@ const fr: Translations = {
     description: 'Convertissez des images en ligne gratuitement. 100% basé sur le navigateur — vos fichiers ne quittent jamais votre appareil. Aucune inscription, aucun téléversement, téléchargement instantané.',
     convertBtn: 'Convertir en',
     aboutTitle: 'À Propos',
+    aboutFormat: 'À propos de {from} et {to}',
+    pageTitleFormat: 'Convertisseur {from} en {to}',
     relatedConversions: 'Conversions Connexes',
     allFormats: 'Tous les Formats Pris en Charge',
+    format: {
+      png: 'Portable Network Graphics — compression sans perte, prend en charge la transparence',
+      jpg: 'JPEG — compression avec perte, idéal pour les photos',
+      webp: 'Google WebP — format moderne, avec/sans perte, 30% plus petit que JPEG',
+      avif: 'Format d\'image AV1 — nouvelle génération, 50% plus petit que JPEG à qualité égale',
+      bmp: 'Bitmap — format raster non compressé',
+      gif: 'Graphics Interchange Format — prend en charge l\'animation',
+      svg: 'Graphiques vectoriels évolutifs — basé sur XML, évolutif à l\'infini',
+      ico: 'Format d\'icône — utilisé pour les favicons, prend en charge plusieurs tailles',
+    },
   },
   faq: {
     free: {

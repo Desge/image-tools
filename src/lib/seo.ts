@@ -7,13 +7,13 @@ import { localeCodes } from '@/i18n';
 const SITE_NAME = 'ImageTools';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
 const TAGLINE = 'Free online image tools — 100% browser-side, zero upload, no signup.';
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 /** 为工具页面生成 Metadata */
 export function generateToolMeta(tool: ToolMeta, locale: string = 'en'): Metadata {
   const title = `${tool.title} — Free Online, No Upload | ${SITE_NAME}`;
   const description = tool.description;
-  const ogImage = `${SITE_URL}/og/${tool.slug}.png`;
-  const url = `${SITE_URL}/${locale}/tools/${tool.slug}`;
+  const url = `${SITE_URL}/${locale}/tools/${tool.slug}/`;
 
   return {
     title,
@@ -22,8 +22,8 @@ export function generateToolMeta(tool: ToolMeta, locale: string = 'en'): Metadat
     alternates: {
       canonical: url,
       languages: {
-        'x-default': `${SITE_URL}/en/tools/${tool.slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/tools/${tool.slug}`])),
+        'x-default': `${SITE_URL}/en/tools/${tool.slug}/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/tools/${tool.slug}/`])),
       },
     },
     openGraph: {
@@ -32,13 +32,13 @@ export function generateToolMeta(tool: ToolMeta, locale: string = 'en'): Metadat
       siteName: SITE_NAME,
       url,
       type: 'website',
-      images: [{ url: ogImage, width: 1200, height: 630 }],
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage],
+      images: [OG_IMAGE],
     },
   };
 }
@@ -50,7 +50,7 @@ export function generateHomeMeta(locale: string = 'en'): Metadata {
     description: TAGLINE,
     keywords: ['image tools', 'compress image', 'convert image', 'resize image', 'crop image', 'free online image editor'],
     alternates: {
-      canonical: `${SITE_URL}/${locale}`,
+      canonical: `${SITE_URL}/${locale}/`,
       languages: {
         'x-default': `${SITE_URL}/en/`,
         ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/`])),
@@ -60,15 +60,15 @@ export function generateHomeMeta(locale: string = 'en'): Metadata {
       title: `${SITE_NAME} — Free Online Image Tools`,
       description: TAGLINE,
       siteName: SITE_NAME,
-      url: `${SITE_URL}/${locale}`,
+      url: `${SITE_URL}/${locale}/`,
       type: 'website',
-      images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${SITE_NAME} — Free Online Image Tools`,
       description: TAGLINE,
-      images: [`${SITE_URL}/og-image.png`],
+      images: [OG_IMAGE],
     },
   };
 }
@@ -78,7 +78,7 @@ export function generateConvertMeta(fromLabel: string, toLabel: string, locale: 
   const title = `${fromLabel} to ${toLabel} Converter — Free Online, No Upload | ${SITE_NAME}`;
   const description = `Convert ${fromLabel} to ${toLabel} online for free. 100% browser-based — your files never leave your device. No signup, no upload, instant download.`;
   const slug = `${fromLabel.toLowerCase()}-to-${toLabel.toLowerCase()}`;
-  const url = `${SITE_URL}/${locale}/convert/${slug}`;
+  const url = `${SITE_URL}/${locale}/convert/${slug}/`;
 
   return {
     title,
@@ -87,8 +87,8 @@ export function generateConvertMeta(fromLabel: string, toLabel: string, locale: 
     alternates: {
       canonical: url,
       languages: {
-        'x-default': `${SITE_URL}/en/convert/${slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/convert/${slug}`])),
+        'x-default': `${SITE_URL}/en/convert/${slug}/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/convert/${slug}/`])),
       },
     },
     openGraph: {
@@ -97,13 +97,13 @@ export function generateConvertMeta(fromLabel: string, toLabel: string, locale: 
       siteName: SITE_NAME,
       url,
       type: 'website',
-      images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${SITE_URL}/og-image.png`],
+      images: [OG_IMAGE],
     },
   };
 }

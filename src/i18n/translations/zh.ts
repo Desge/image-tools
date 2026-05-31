@@ -239,8 +239,20 @@ const zh: Translations = {
     description: '在线免费转换图像。100% 基于浏览器 — 你的文件从不离开你的设备。无需注册、无需上传、即时下载。',
     convertBtn: '转换为',
     aboutTitle: '关于',
+    aboutFormat: '关于 {from} 和 {to}',
+    pageTitleFormat: '{from} 转 {to} 转换器',
     relatedConversions: '相关转换',
     allFormats: '所有支持的格式',
+    format: {
+      png: '便携式网络图形 — 无损压缩，支持透明背景',
+      jpg: 'JPEG — 有损压缩，最适合照片',
+      webp: 'Google WebP — 现代格式，支持有损+无损，比 JPEG 小 30%',
+      avif: 'AV1 图像格式 — 下一代格式，相同质量比 JPEG 小 50%',
+      bmp: '位图 — 未压缩的栅格格式',
+      gif: '图形交换格式 — 支持动画',
+      svg: '可缩放矢量图形 — 基于 XML，无限缩放',
+      ico: '图标格式 — 用于 favicon，支持多种尺寸',
+    },
   },
   faq: {
     free: {

@@ -81,8 +81,8 @@ export function ImageConverter({ fromFormat, toFormat, t }: ImageConverterProps)
           onFilesSelected={handleFiles}
           multiple={false}
           t={t ?? undefined}
-          label={`Drop a ${fromFormat.toUpperCase()} image here or click to browse`}
-          hint={`Convert ${fromFormat.toUpperCase()} to ${toFormat.toUpperCase()} — 100% browser-side`}
+          label={t?.toolPage?.dropHere || `Drop a ${fromFormat.toUpperCase()} image here or click to browse`}
+          hint={t?.toolPage?.dropHint || `Convert ${fromFormat.toUpperCase()} to ${toFormat.toUpperCase()} — 100% browser-side`}
         />
       )}
 
@@ -98,14 +98,14 @@ export function ImageConverter({ fromFormat, toFormat, t }: ImageConverterProps)
               onClick={() => { setFile(null); setResultBlob(null); setResultCanvas(null); }}
               className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
             >
-              ← Upload different image
+              {t?.toolPage?.uploadDifferent || '← Upload different image'}
             </button>
           </div>
 
           <div className="flex flex-wrap items-end gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
             {toFormat === 'jpg' || toFormat === 'webp' || toFormat === 'avif' ? (
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Quality</label>
+                <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{t?.toolPage?.quality || 'Quality'}</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="range"
@@ -125,7 +125,7 @@ export function ImageConverter({ fromFormat, toFormat, t }: ImageConverterProps)
               disabled={isProcessing}
               className="px-6 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-all"
             >
-              {isProcessing ? 'Converting...' : `Convert to ${toFormat.toUpperCase()}`}
+              {isProcessing ? (t?.toolPage?.compressBtn ? `${t.toolPage.compressBtn}...` : 'Converting...') : (t?.converter?.convertBtn ? `${t.converter.convertBtn} ${toFormat.toUpperCase()}` : `Convert to ${toFormat.toUpperCase()}`)}
             </button>
           </div>
 
@@ -141,7 +141,7 @@ export function ImageConverter({ fromFormat, toFormat, t }: ImageConverterProps)
                 blob={resultBlob}
                 filename={`converted${toExt}`}
                 t={t ?? undefined}
-                label={`Download ${toFormat.toUpperCase()}`}
+                label={t?.common?.downloadBtn ? `${t.common.downloadBtn} ${toFormat.toUpperCase()}` : `Download ${toFormat.toUpperCase()}`}
               />
             </div>
           )}

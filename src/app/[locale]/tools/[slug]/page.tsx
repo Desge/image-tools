@@ -6,6 +6,9 @@ import type { Translations } from '@/i18n';
 import { generateWebApplicationSchema, generateFAQSchema, generateBreadcrumbSchema, generateHowToSchema } from '@/lib/jsonld';
 import { ToolPageClient } from './ToolPageClient';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com';
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 // ═══════════════════════════════════════════
 // 为每种语言 × 每个工具生成独立页面
 // ═══════════════════════════════════════════
@@ -38,25 +41,25 @@ export async function generateMetadata({
     title: `${title} — ${t.common.seoTitleSuffix}`,
     description: t.common.seoDescription,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/tools/${tool.slug}`,
+      canonical: `${SITE_URL}/${locale}/tools/${tool.slug}/`,
       languages: {
-        'x-default': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/en/tools/${tool.slug}`,
-        ...Object.fromEntries(localeCodes().map((l) => [l, `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${l}/tools/${tool.slug}`])),
+        'x-default': `${SITE_URL}/en/tools/${tool.slug}/`,
+        ...Object.fromEntries(localeCodes().map((l) => [l, `${SITE_URL}/${l}/tools/${tool.slug}/`])),
       },
     },
     openGraph: {
       title: `${title} — ${t.common.seoTitleSuffix}`,
       description: desc,
       siteName: 'ImageTools',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/${locale}/tools/${tool.slug}`,
+      url: `${SITE_URL}/${locale}/tools/${tool.slug}/`,
       type: 'website',
-      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`, width: 1200, height: 630 }],
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${title} — ${t.common.seoTitleSuffix}`,
       description: desc,
-      images: [`${process.env.NEXT_PUBLIC_SITE_URL || 'https://image.toolconv.com'}/og-image.png`],
+      images: [OG_IMAGE],
     },
   };
 }
@@ -106,12 +109,12 @@ export default async function LocaleToolPage({
     { question: t.faq.batch.q, answer: t.faq.batch.a },
   ]);
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'ImageTools', url: `/${locale}` },
+    { name: t.common.siteName, url: `/${locale}` },
     { name: tt?.title || tool.title, url: `/${locale}/tools/${tool.slug}` },
   ]);
   const howToSchema = generateHowToSchema(
-    `How to ${(tt?.title || tool.title).toLowerCase()}`,
-    ['Upload Image', 'Adjust Settings', 'Download Result'],
+    t.toolPage.faqTitle,
+    [t.toolPage.dropHere, t.toolPage.compressBtn, t.common.downloadBtn],
   );
 
   return (
